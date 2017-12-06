@@ -38,12 +38,12 @@ import java.util.StringTokenizer;
  */
 public final class MemoryClassLoader extends URLClassLoader
 {
-	private final Map<String, byte[]> classBytes;
+	private final Map<String, byte[]> _classBytes;
 	
 	public MemoryClassLoader(Map<String, byte[]> classBytes, String classPath, ClassLoader parent)
 	{
 		super(toURLs(classPath), parent);
-		this.classBytes = classBytes;
+		_classBytes = classBytes;
 	}
 	
 	public MemoryClassLoader(Map<String, byte[]> classBytes, String classPath)
@@ -58,8 +58,8 @@ public final class MemoryClassLoader extends URLClassLoader
 	
 	public Iterable<Class<?>> loadAll() throws ClassNotFoundException
 	{
-		List<Class<?>> classes = new ArrayList<>(classBytes.size());
-		for (String name : classBytes.keySet())
+		List<Class<?>> classes = new ArrayList<>(_classBytes.size());
+		for (String name : _classBytes.keySet())
 		{
 			classes.add(loadClass(name));
 		}
@@ -69,11 +69,11 @@ public final class MemoryClassLoader extends URLClassLoader
 	@Override
 	protected Class<?> findClass(String className) throws ClassNotFoundException
 	{
-		byte buf[] = classBytes.get(className);
+		byte buf[] = _classBytes.get(className);
 		if (buf != null)
 		{
 			// clear the bytes in map -- we don't need it anymore
-			classBytes.put(className, null);
+			_classBytes.put(className, null);
 			return defineClass(className, buf, 0, buf.length);
 		}
 		return super.findClass(className);

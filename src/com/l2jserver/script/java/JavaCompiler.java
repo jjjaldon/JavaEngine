@@ -93,11 +93,13 @@ public class JavaCompiler
 		options.add("-g");
 		options.add("-deprecation");
 		options.add("-1.8");
+		
 		if (sourcePath != null)
 		{
 			options.add("-sourcepath");
 			options.add(sourcePath);
 		}
+		
 		if (classPath != null)
 		{
 			options.add("-classpath");
@@ -118,8 +120,17 @@ public class JavaCompiler
 			return null;
 		}
 		
-		Map<String, byte[]> classBytes = manager.getClassBytes();
-		manager.close();
+		Map<String, byte[]> classBytes = null;
+		
+		try
+		{
+			classBytes = manager.getClassBytes();
+			manager.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		return classBytes;
 	}
 }

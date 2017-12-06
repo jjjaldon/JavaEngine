@@ -59,7 +59,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 	}
 	
 	// my factory, may be null
-	private ScriptEngineFactory factory;
+	private ScriptEngineFactory _factory;
 	
 	// my implementation for CompiledScript
 	private static class JavaCompiledScript extends CompiledScript implements Serializable
@@ -127,12 +127,12 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 	{
 		synchronized (this)
 		{
-			if (factory == null)
+			if (_factory == null)
 			{
-				factory = new JavaScriptEngineFactory();
+				_factory = new JavaScriptEngineFactory();
 			}
 		}
-		return factory;
+		return _factory;
 	}
 	
 	@Override
@@ -143,7 +143,7 @@ public class JavaScriptEngine extends AbstractScriptEngine implements Compilable
 	
 	void setFactory(ScriptEngineFactory factory)
 	{
-		this.factory = factory;
+		_factory = factory;
 	}
 	
 	// Internals only below this point

@@ -77,18 +77,18 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	 */
 	private static class StringInputBuffer extends SimpleJavaFileObject
 	{
-		final String code;
+		final String _code;
 		
 		StringInputBuffer(String name, String code)
 		{
 			super(toURI(name), Kind.SOURCE);
-			this.code = code;
+			_code = code;
 		}
 		
 		@Override
 		public CharBuffer getCharContent(boolean ignoreEncodingErrors)
 		{
-			return CharBuffer.wrap(code);
+			return CharBuffer.wrap(_code);
 		}
 	}
 	
@@ -97,12 +97,12 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 	 */
 	private class ClassOutputBuffer extends SimpleJavaFileObject
 	{
-		protected final String name;
+		protected final String _name;
 		
 		ClassOutputBuffer(String name)
 		{
 			super(toURI(name), Kind.CLASS);
-			this.name = name;
+			_name = name;
 		}
 		
 		@Override
@@ -115,7 +115,7 @@ public final class MemoryJavaFileManager extends EclipseFileManager
 				{
 					out.close();
 					ByteArrayOutputStream bos = (ByteArrayOutputStream) out;
-					classBytes.put(name, bos.toByteArray());
+					classBytes.put(_name, bos.toByteArray());
 				}
 			};
 		}
